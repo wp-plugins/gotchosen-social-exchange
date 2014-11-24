@@ -89,7 +89,7 @@ class GOT_CHOSEN_INTG_PLUGIN {
     add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts'));
     add_action('admin_enqueue_scripts', array(&$this, 'admin_enqueue_scripts'));
     add_action('save_post', array(&$this, 'save_post'));
-    add_action('wp', array(&$this, 'schedule_pub'));
+    add_action('wp', array(&$this, 'process_pub_queue'));
     add_action('admin_menu', array(&$this, 'admin_menu'));
     add_action('add_meta_boxes_post', array(&$this, 'add_meta_boxes'));
   }
