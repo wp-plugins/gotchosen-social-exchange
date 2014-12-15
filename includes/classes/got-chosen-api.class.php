@@ -118,11 +118,20 @@ class GOT_CHOSEN_API_HANDLER {
   private function call_api($method, $endpoint, $args) {
     // Set common headers.
     $args['headers'] = array('Content-Type' => 'application/json', 'X-GotChosen-Feed-Key' => $this -> feedkey );
+    if (!empty($args['body'])) {
+      $args['headers']['Content-Length'] = strlen($args['body']);
+    }
     $response = array();
+    $http = new WP_Http_Streams();
     if ($method == 'GET') {
-      $response = wp_remote_get($this -> api_url . $endpoint, $args);
+      $response = $http->request($this -> api_url . $endpoint, $args);
+      // Old versions of CURL are completely broken
+      // $response = wp_remote_get($this -> api_url . $endpoint, $args);
     } elseif ($method == 'POST') {
-      $response = wp_remote_post($this -> api_url . $endpoint, $args);
+      $args['method'] = 'POST';
+      $response = $http->request($this -> api_url . $endpoint, $args);
+      // Old versions of CURL are completely broken
+      // $response = wp_remote_post($this -> api_url . $endpoint, $args);
     }
     // Handle request errors.
     if (is_wp_error($response)) {

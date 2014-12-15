@@ -327,6 +327,7 @@ class GOT_CHOSEN_INTG_PLUGIN {
         $this -> options['shareable'] = isset($_POST['shareable']) ? 1 : 0;
         $this -> options['commentable'] = isset($_POST['commentable']) ? 1 : 0;
         update_option('got_chosen_intg_settings', $this -> options);
+        delete_transient('got_chosen_intg_gcid');
       }
     }
     // Include admin template.
