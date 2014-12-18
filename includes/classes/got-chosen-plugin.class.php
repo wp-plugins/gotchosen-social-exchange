@@ -91,6 +91,7 @@ class GOT_CHOSEN_INTG_PLUGIN {
     add_action('save_post', array(&$this, 'save_post'));
     add_action('admin_menu', array(&$this, 'admin_menu'));
     add_action('add_meta_boxes_post', array(&$this, 'add_meta_boxes'));
+    add_action('wp_head', array(&$this, 'add_meta_tag'));
   }
 
   /**
@@ -122,6 +123,7 @@ class GOT_CHOSEN_INTG_PLUGIN {
    * transient so the API does not need to be called as frequently.
    *
    * @since 1.0
+   * @deprecated
    * @access private
    *
    * @see __construct()
@@ -130,15 +132,26 @@ class GOT_CHOSEN_INTG_PLUGIN {
    */
 
   private function get_gcid() {
+    if ( !empty($this -> options['gcid']) ) {
+        return $this -> options['gcid'];
+    }
+
     if ($gcid = get_transient('got_chosen_intg_gcid')) {
       return $gcid;
-    } else {
+    }
+
+    if ( !empty($this -> options['feedkey']) ) {
       $response = $this -> api -> verifyminifeed();
       if ($response) {
-        set_transient('got_chosen_intg_gcid', $response -> gcid, (24 * 60 * 60));
-        return $response -> gcid;
+        // Don't use this anymore
+        // set_transient('got_chosen_intg_gcid', $response -> gcid, (24 * 60 * 60));
+        $this -> options['gcid'] = $response -> gcid;
+        update_option('got_chosen_intg_settings', $this -> options);
+
+        return $this -> options['gcid'];
       }
     }
+
     return false;
   }
 
@@ -231,15 +244,15 @@ class GOT_CHOSEN_INTG_PLUGIN {
 
   /**
    * Gets the image source for a post.
-   * 
-   * Looks for a featured image source, or the source of the 
+   *
+   * Looks for a featured image source, or the source of the
    * first image in the body of the post, and returns it.
-   * 
+   *
    * @since 1.0.3
    * @access private
-   * 
+   *
    * @see save_post()
-   * 
+   *
    * @param object $post The current post object.
    * @return mixed The URL to the image source, or false.
    */
@@ -320,6 +333,7 @@ class GOT_CHOSEN_INTG_PLUGIN {
       // Verify submission was made on the site.
       if (wp_verify_nonce($_POST['_wpnonce'], 'got chosen save options') !== false) {
         // Rebuild options array and update.
+        $this -> options['gcid'] = isset($_POST['gcid']) ? $_POST['gcid'] : $this -> options['gcid'];
         $this -> options['feedkey'] = isset($_POST['feedkey']) ? $_POST['feedkey'] : $this -> options['feedkey'];
         $this -> options['webcurtain'] = isset($_POST['webcurtain']) ? 1 : 0;
         $this -> options['webcurtain_compat'] = isset($_POST['webcurtain_compat']) ? 1 : 0;
@@ -374,4 +388,7 @@ class GOT_CHOSEN_INTG_PLUGIN {
     echo '<input type="checkbox" name="gc_minifeed_publish" id="gc_minifeed_publish" ' . $checked . '/>';
   }
 
+  public function add_meta_tag() {
+      echo '<meta name="gotchosen:gcid" content="' . $this -> gcid . '" />';
+  }
 }

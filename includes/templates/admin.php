@@ -3,6 +3,13 @@
   <div>
     <form action="" method="post">
       <?php wp_nonce_field('got chosen save options'); ?>
+      <h3>GCID</h3>
+      <div class="gc_opts_group">
+          <div class="gc_option">
+              <label for="gcid">Enter GCID provided to your publisher account: </label>
+              <input type="text" value="<?php echo $this->options['gcid'] ?>" name="gcid" id="gcid" />
+          </div>
+      </div>
       <h3>Feed Key</h3>
       <div class="gc_opts_group">
         <div class="gc_option">
