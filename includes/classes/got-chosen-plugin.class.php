@@ -168,7 +168,7 @@ class GOT_CHOSEN_INTG_PLUGIN {
   public function enqueue_scripts() {
     if ($this -> gcid && $this -> options['webcurtain']) {
       wp_register_script('gc_intg_webcurtain', $this -> includes_url . '/js/gc-webcurtain.js', array('jquery'));
-      wp_localize_script('gc_intg_webcurtain', 'gc_intg_plugin', array('gcid' => $this -> gcid, 'compat' => $this -> options['webcurtain_compat'], ));
+      wp_localize_script('gc_intg_webcurtain', 'gc_intg_plugin', array('gcid' => trim($this -> gcid), 'compat' => $this -> options['webcurtain_compat'], ));
       wp_enqueue_script('gc_intg_webcurtain');
     }
   }
@@ -389,6 +389,6 @@ class GOT_CHOSEN_INTG_PLUGIN {
   }
 
   public function add_meta_tag() {
-      echo '<meta name="gotchosen:gcid" content="' . $this -> gcid . '" />';
+      echo '<meta name="gotchosen:gcid" content="' . trim($this -> gcid) . '" />';
   }
 }
