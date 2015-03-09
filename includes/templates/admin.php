@@ -17,10 +17,10 @@
           <input type="text" value="<?php echo $this->options['feedkey'] ?>" name="feedkey" id="feedkey" />
         </div>
       </div>
-      <h3>Webcurtain Settings</h3>
+      <h3>WebCurtain Settings</h3>
       <div class="gc_opts_group">
         <div class="gc_option">
-          <label for="webcurtain">Enable the webcurtain: </label>
+          <label for="webcurtain">Enable the WebCurtain: </label>
           <input type="checkbox" name="webcurtain" id="webcurtain" <?php echo($this -> options['webcurtain']) ? 'checked="checked"' : ''; ?>
           />
         </div>
@@ -29,7 +29,7 @@
           <input type="checkbox" name="webcurtain_compat" id="webcurtain_compat" <?php echo($this -> options['webcurtain_compat']) ? 'checked="checked"' : ''; ?>
           />
           <p class="description">
-            Use compatability mode if the webcurtain is not displaying properly on your site.
+            Use compatability mode if the WebCurtain is not displaying properly on your site.
           </p>
         </div>
       </div>
