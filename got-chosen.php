@@ -2,8 +2,8 @@
 /**
  * Plugin Name: GotChosen Integration
  * Plugin URI: http://gotchosen.com
- * Description: Enables support for GotChosen's web curtain and Social Exchange.
- * Version: 1.0.8
+ * Description: Enables support for GotChosen's WebCurtain and Social Exchange.
+ * Version: 1.0.9
  */
 
 // Require our class files.

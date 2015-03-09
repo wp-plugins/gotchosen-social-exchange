@@ -1,5 +1,5 @@
 <div class="wrap">
-  <h2 class="gc_title"><img src="<?php echo $this->includes_url ?>/images/gc-thumb.svg" width="30px" />GotChosen Integration</h2>
+  <h2 class="gc_title"><img src="<?php echo $this->includes_url ?>/images/gc-thumb.png" width="30px" />GotChosen Integration</h2>
   <div>
     <form action="" method="post">
       <?php wp_nonce_field('got chosen save options'); ?>
